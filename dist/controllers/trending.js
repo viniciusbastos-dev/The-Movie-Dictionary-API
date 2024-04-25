@@ -29,3 +29,4 @@ trendingRouter.get("/:mediaType/:timeWindow", (request, response) => __awaiter(v
     }
 }));
 exports.default = trendingRouter;
+//# sourceMappingURL=trending.js.map

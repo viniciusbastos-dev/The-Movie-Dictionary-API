@@ -10,3 +10,4 @@ const errorHandler = (error, request, response, next) => {
     next(error);
 };
 exports.errorHandler = errorHandler;
+//# sourceMappingURL=middleware.js.map

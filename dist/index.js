@@ -8,3 +8,4 @@ const config_1 = require("./utils/config");
 app_1.default.listen(config_1.PORT, () => {
     console.log(`Servidor rodando na porta ${config_1.PORT}`);
 });
+//# sourceMappingURL=index.js.map

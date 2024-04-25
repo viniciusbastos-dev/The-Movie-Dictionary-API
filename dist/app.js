@@ -12,3 +12,4 @@ app.use("/api/trending", trending_1.default);
 app.use(middleware_1.unknownEndpoint);
 app.use(middleware_1.errorHandler);
 exports.default = app;
+//# sourceMappingURL=app.js.map

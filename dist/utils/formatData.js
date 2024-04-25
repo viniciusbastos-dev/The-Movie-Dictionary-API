@@ -26,3 +26,4 @@ const formatSerieData = (serie) => {
     return serie;
 };
 exports.formatSerieData = formatSerieData;
+//# sourceMappingURL=formatData.js.map

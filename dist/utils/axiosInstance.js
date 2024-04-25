@@ -14,3 +14,4 @@ axiosInstance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 exports.default = axiosInstance;
+//# sourceMappingURL=axiosInstance.js.map
