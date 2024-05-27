@@ -20,12 +20,19 @@ trendingRouter.get("/:mediaType/:timeWindow", (request, response) => __awaiter(v
     const { mediaType, timeWindow } = request.params;
     const apiResponse = yield axiosInstance_1.default.get(`/trending/${mediaType}/${timeWindow}?language=pt-BR`);
     if (mediaType === "movie") {
-        const formattedData = apiResponse.data.results.map((item) => (0, formatData_1.formatMovieData)(item));
+        const formattedData = apiResponse.data.results.map((item) => (0, formatData_1.formatMediaData)(item, item.media_type));
         response.json(formattedData);
     }
     else if (mediaType === "tv") {
-        const formattedData = apiResponse.data.results.map((item) => (0, formatData_1.formatSerieData)(item));
+        const formattedData = apiResponse.data.results.map((item) => (0, formatData_1.formatMediaData)(item, item.media_type));
         response.json(formattedData);
+    }
+    else if (mediaType === "all") {
+        const formattedData = apiResponse.data.results.map((item) => (0, formatData_1.formatMediaData)(item, item.media_type));
+        response.json(formattedData.slice(0, 5));
+    }
+    else {
+        response.status(400).json({ error: "Erro na requisição" });
     }
 }));
 exports.default = trendingRouter;

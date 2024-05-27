@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import API from "../utils/axiosInstance";
-import { formatMovieData, formatSerieData } from "../utils/formatData";
+import { formatMediaData } from "../utils/formatData";
 const trendingRouter = Router();
 
 trendingRouter.get(
@@ -14,16 +14,24 @@ trendingRouter.get(
 
     if (mediaType === "movie") {
       const formattedData = apiResponse.data.results.map((item: any) =>
-        formatMovieData(item)
+        formatMediaData(item, item.media_type)
       );
 
       response.json(formattedData);
     } else if (mediaType === "tv") {
       const formattedData = apiResponse.data.results.map((item: any) =>
-        formatSerieData(item)
+        formatMediaData(item, item.media_type)
       );
 
       response.json(formattedData);
+    } else if (mediaType === "all") {
+      const formattedData = apiResponse.data.results.map((item: any) =>
+        formatMediaData(item, item.media_type)
+      );
+
+      response.json(formattedData.slice(0, 5));
+    } else {
+      response.status(400).json({ error: "Erro na requisição" });
     }
   }
 );

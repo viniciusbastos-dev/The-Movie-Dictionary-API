@@ -38,37 +38,35 @@ interface SerieData {
 
 const imageURL = "https://image.tmdb.org/t/p/original";
 
-export const formatMovieData = (movieData: any): MovieData => {
+export const formatMediaData = (
+  mediaData: any,
+  type: "movie" | "tv"
+): MovieData | SerieData => {
+  const isSerie = type === "tv";
+
   const formattedReleaseDate = format(
-    new Date(movieData.release_date + "T03:00:00Z"),
+    new Date(
+      (isSerie ? mediaData.first_air_date : mediaData.release_date) +
+        "T03:00:00Z"
+    ),
     "dd/MM/yyyy"
   );
 
-  movieData.background = imageURL + movieData.backdrop_path;
-  movieData.poster = imageURL + movieData.poster_path;
-  movieData.release_date = formattedReleaseDate;
+  const formattedData = {
+    ...mediaData,
+    background: imageURL + mediaData.backdrop_path,
+    poster: imageURL + mediaData.poster_path,
+    release_date: formattedReleaseDate,
+  };
 
-  delete movieData.backdrop_path;
-  delete movieData.poster_path;
+  if (isSerie) {
+    formattedData.title = mediaData.name;
+    delete formattedData.first_air_date;
+    delete formattedData.name;
+  }
 
-  return movieData;
-};
+  delete formattedData.backdrop_path;
+  delete formattedData.poster_path;
 
-export const formatSerieData = (serie: any): SerieData => {
-  const formattedReleaseDate = format(
-    new Date(serie.first_air_date + "T03:00:00Z"),
-    "dd/MM/yyyy"
-  );
-
-  serie.title = serie.name;
-  serie.background = imageURL + serie.backdrop_path;
-  serie.poster = imageURL + serie.poster_path;
-  serie.release_date = formattedReleaseDate;
-
-  delete serie.backdrop_path;
-  delete serie.poster_path;
-  delete serie.first_air_date;
-  delete serie.name;
-
-  return serie;
+  return formattedData;
 };
