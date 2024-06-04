@@ -44,13 +44,18 @@ export const formatMediaData = (
 ): MovieData | SerieData => {
   const isSerie = type === "tv";
 
-  const formattedReleaseDate = format(
-    new Date(
-      (isSerie ? mediaData.first_air_date : mediaData.release_date) +
-        "T03:00:00Z"
-    ),
-    "dd/MM/yyyy"
-  );
+  const formattedReleaseDate =
+    (mediaData?.first_air_date !== undefined &&
+      mediaData?.first_air_date !== "") ||
+    (mediaData?.release_date !== undefined && mediaData?.release_date !== "")
+      ? format(
+          new Date(
+            (isSerie ? mediaData.first_air_date : mediaData.release_date) +
+              "T03:00:00Z"
+          ),
+          "dd/MM/yyyy"
+        )
+      : "Não informado";
 
   const formattedData = {
     ...mediaData,

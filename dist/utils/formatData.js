@@ -5,8 +5,12 @@ const date_fns_1 = require("date-fns");
 const imageURL = "https://image.tmdb.org/t/p/original";
 const formatMediaData = (mediaData, type) => {
     const isSerie = type === "tv";
-    const formattedReleaseDate = (0, date_fns_1.format)(new Date((isSerie ? mediaData.first_air_date : mediaData.release_date) +
-        "T03:00:00Z"), "dd/MM/yyyy");
+    const formattedReleaseDate = ((mediaData === null || mediaData === void 0 ? void 0 : mediaData.first_air_date) !== undefined &&
+        (mediaData === null || mediaData === void 0 ? void 0 : mediaData.first_air_date) !== "") ||
+        ((mediaData === null || mediaData === void 0 ? void 0 : mediaData.release_date) !== undefined && (mediaData === null || mediaData === void 0 ? void 0 : mediaData.release_date) !== "")
+        ? (0, date_fns_1.format)(new Date((isSerie ? mediaData.first_air_date : mediaData.release_date) +
+            "T03:00:00Z"), "dd/MM/yyyy")
+        : "Não informado";
     const formattedData = Object.assign(Object.assign({}, mediaData), { background: imageURL + mediaData.backdrop_path, poster: imageURL + mediaData.poster_path, release_date: formattedReleaseDate });
     if (isSerie) {
         formattedData.title = mediaData.name;
